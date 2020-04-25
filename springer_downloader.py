@@ -28,6 +28,7 @@ class SpringerDownloader():
         """Loop through each page performing action on each page."""
         page_num = start_page_num
         next_page_arrow_imgs = [None]  # If empty then reached the last page.
+        result_soups = []
 
         # Keep going until there is no arrow link to a following page.
         while len(next_page_arrow_imgs) > 0:
@@ -38,12 +39,15 @@ class SpringerDownloader():
                    + self._URL_SUFFIX)
 
             source = requests.get(url).text
-            soup = BeautifulSoup(source, 'lxml')
-            print(soup.title(soup)
+            result_soup = BeautifulSoup(source, 'lxml')
+            result_soups.append(result_soup)  # save the current pages soup
+            action(result_soup)
 
             # Find arrow button links to next page.
-            next_page_arrow_imgs = soup.main.find_all('img', alt='next')
+            next_page_arrow_imgs = result_soup.main.find_all('img', alt='next')
             page_num += 1
+
+        return result_soups  # return all soups for debugging
 
 
 def dummy_function(soup):
@@ -54,4 +58,4 @@ def dummy_function(soup):
 if __name__ == '__main__':
     URL_SUFFIX = '?facet-content-type=%22Book%22&package=mat-covid19_textbooks&fbclid=IwAR2dD_eYkJArztAjIwg501C7aa9sSA9FGh8ov0PCS6-eY3QFxz2NVqNanHs&facet-language=%22En%22&facet-discipline=%22Computer+Science%22'
     downloader = SpringerDownloader(URL_SUFFIX)
-    downloader.execute_on_all_pages(dummy_function)
+    result_soups = downloader.execute_on_all_pages(dummy_function)
