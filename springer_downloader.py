@@ -63,5 +63,5 @@ def dummy_function(soup):
 
 if __name__ == '__main__':
     URL_SUFFIX = '?facet-content-type=%22Book%22&package=mat-covid19_textbooks&fbclid=IwAR2dD_eYkJArztAjIwg501C7aa9sSA9FGh8ov0PCS6-eY3QFxz2NVqNanHs&facet-language=%22En%22&facet-discipline=%22Computer+Science%22'
-    downloader = SpringerDownloader(URL_SUFFIX)
-    result_soups = downloader.execute_on_all_pages(downloader.download_books)
+    dl = SpringerDownloader(URL_SUFFIX)
+    result_soups = dl.execute_on_all_pages(dl.download_books)
