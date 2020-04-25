@@ -9,6 +9,9 @@ import requests
 
 
 class SpringerDownloader():
+    """Defines a class for downloading PDF and EPUB files from a given
+    Springer package search result."""
+
     # CONSTANTS
     URL_BASE = 'https://link.springer.com/'
     URL_SEARCH_BASE = 'https://link.springer.com/search/page/'
