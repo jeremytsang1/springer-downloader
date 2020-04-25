@@ -49,7 +49,6 @@ class SpringerDownloader():
 
         return result_soups  # return all soups for debugging
 
-
     def download_books(self, result_soup):
         anchors = result_soup.main.find_all('a', class_='title')
         for anchor in anchors:
