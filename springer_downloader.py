@@ -77,8 +77,17 @@ class SpringerDownloader():
         return author + '-' + title + '.' + filetype
 
     def find_author(self, book_soup):
-        author = book_soup.find(class_="authors__name")
-        author = author.text.replace(u'\xa0', u' ')
+        author = book_soup.find(class_="authors__name").text
+
+        # Fix unicode space.
+        author = author.replace(u'\xa0', u' ')
+
+        # Grab the last name and make lower case.
+        author = author[author.rfind(' ') + 1:].lower()
+
+        #Remove apostrophes in name
+        author = author.replace("'", "_")
+
         return author
 
     def find_title(self, book_soup):
