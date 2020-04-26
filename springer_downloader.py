@@ -139,11 +139,6 @@ class SpringerDL():
             open(filename, 'wb').write(download_request.content)
 
 
-def dummy_function(soup):
-    """Dummy function."""
-    return soup
-
-
 if __name__ == '__main__':
     URL_SUFFIX = '?facet-content-type=%22Book%22&package=mat-covid19_textbooks&fbclid=IwAR2dD_eYkJArztAjIwg501C7aa9sSA9FGh8ov0PCS6-eY3QFxz2NVqNanHs&facet-language=%22En%22&facet-discipline=%22Computer+Science%22'
     dl = SpringerDL(URL_SUFFIX)
