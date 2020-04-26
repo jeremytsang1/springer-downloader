@@ -9,7 +9,7 @@ import requests
 import os
 
 
-class SpringerDownloader():
+class SpringerDL():
     """Defines a class for downloading PDF and EPUB files from a given
     Springer package search result."""
 
@@ -41,7 +41,7 @@ class SpringerDownloader():
             print(79 * "-")
             print(f'Processing page {page_num}')
 
-            url = (SpringerDownloader.URL_SEARCH_BASE + str(page_num)
+            url = (SpringerDL.URL_SEARCH_BASE + str(page_num)
                    + self._URL_SUFFIX)
 
             source = requests.get(url).text
@@ -58,7 +58,7 @@ class SpringerDownloader():
     def download_books(self, result_soup):
         anchors = result_soup.main.find_all('a', class_='title')
         for anchor in anchors:
-            book_url = SpringerDownloader.URL_BASE + anchor.get('href')
+            book_url = SpringerDL.URL_BASE + anchor.get('href')
             self.download_book(book_url)
 
     def download_book(self, book_url):
@@ -70,7 +70,7 @@ class SpringerDownloader():
 
         # Check which formats are available to download.
         for filetype in self.find_filetypes(book_soup):
-            download_url = SpringerDownloader.DOWNLOAD_TEMPLATES[filetype].format(isbn)
+            download_url = SpringerDL.DOWNLOAD_TEMPLATES[filetype].format(isbn)
             filename = self.generate_filename(book_soup, filetype)
             print(filename, download_url, sep='\n  ')
             # self.save_file(download_url, filename)
@@ -79,7 +79,7 @@ class SpringerDownloader():
         available_filetypes = set()
         title_val_template = "Download this book in {} format"
 
-        for filetype in SpringerDownloader.FILETYPES:
+        for filetype in SpringerDL.FILETYPES:
             title_val = title_val_template.format(filetype.upper())
             if len(book_soup.find_all('a', title=title_val)) != 0:
                 available_filetypes.add(filetype)
@@ -118,7 +118,7 @@ class SpringerDownloader():
         return title
 
     def save_file(self, download_url, base_filename):
-        directory = SpringerDownloader.DOWNLOAD_DIR
+        directory = SpringerDL.DOWNLOAD_DIR
 
         if not os.path.exists(directory):
             os.mkdir(directory)
@@ -139,5 +139,5 @@ def dummy_function(soup):
 
 if __name__ == '__main__':
     URL_SUFFIX = '?facet-content-type=%22Book%22&package=mat-covid19_textbooks&fbclid=IwAR2dD_eYkJArztAjIwg501C7aa9sSA9FGh8ov0PCS6-eY3QFxz2NVqNanHs&facet-language=%22En%22&facet-discipline=%22Computer+Science%22'
-    dl = SpringerDownloader(URL_SUFFIX)
+    dl = SpringerDL(URL_SUFFIX)
     dl.download()
