@@ -104,7 +104,7 @@ class SpringerDL():
         # Grab the last name and make lower case.
         author = author[author.rfind(' ') + 1:].lower()
 
-        #Remove apostrophes in name
+        # Remove apostrophes in name
         author = author.replace("'", "_")
 
         return author
