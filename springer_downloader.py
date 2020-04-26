@@ -52,7 +52,9 @@ class SpringerDownloader():
     def download_books(self, result_soup):
         anchors = result_soup.main.find_all('a', class_='title')
         for anchor in anchors:
-            print(anchor.text)
+            title = anchor.text
+            book_url = SpringerDownloader.URL_BASE + anchor.get('href')
+            isbn = book_url[book_url.rfind('/') + 1:]
 
 
 def dummy_function(soup):
