@@ -52,21 +52,35 @@ class SpringerDownloader():
     def download_books(self, result_soup):
         anchors = result_soup.main.find_all('a', class_='title')
         for anchor in anchors:
-            title = anchor.text
             book_url = SpringerDownloader.URL_BASE + anchor.get('href')
-            self.download_book(book_url, title)
+            self.download_book(book_url)
 
-    def download_book(self, book_url, title):
+    def download_book(self, book_url):
         isbn = book_url[book_url.rfind('/') + 1:]
 
         # Go to the individual book's page.
         source = requests.get(book_url).text
         book_soup = BeautifulSoup(source, 'lxml')
-        print(book_soup.title)
 
         # Check which formats are available to download.
+        for filetype in self.find_filetypes(book_soup):
+            download_url = SpringerDownloader.DOWNLOAD_TEMPLATES[filetype]
+            r = requests.get(download_url, allow_redirects=True)
+            open(self.gen_filename(book_soup, filetype), 'wb').write(r.content)
 
-        # Download available formats
+    def find_filetypes(self, book_soup):
+        return []
+
+    def gen_filename(self, book_soup, filetype):
+        author = self.find_author(book_soup)
+        title = self.find_title(book_soup)
+        return author + '-' + title + '.' + filetype
+
+    def find_author(self, book_soup):
+        return 'author'
+
+    def find_title(self, book_soup):
+        return 'title'
 
 
 def dummy_function(soup):
