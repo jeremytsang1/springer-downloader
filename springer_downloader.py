@@ -25,6 +25,10 @@ class SpringerDownloader():
 
     def __init__(self, url_suffix):
         self._URL_SUFFIX = url_suffix
+        self._result_soups = None
+
+    def download(self):
+        self._result_soups = self.execute_on_all_pages(self.download_books)
 
     def execute_on_all_pages(self, action, start_page_num=1,):
         """Loop through each page performing action on each page."""
@@ -136,4 +140,4 @@ def dummy_function(soup):
 if __name__ == '__main__':
     URL_SUFFIX = '?facet-content-type=%22Book%22&package=mat-covid19_textbooks&fbclid=IwAR2dD_eYkJArztAjIwg501C7aa9sSA9FGh8ov0PCS6-eY3QFxz2NVqNanHs&facet-language=%22En%22&facet-discipline=%22Computer+Science%22'
     dl = SpringerDownloader(URL_SUFFIX)
-    result_soups = dl.execute_on_all_pages(dl.download_books)
+    dl.download()
