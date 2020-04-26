@@ -1,0 +1,11 @@
+* Springer Downloader
+** Installation
+1) clone the repo
+2) install dependencies (use a virtual environment if possible)
+   #+begin_src bash
+     pip install -r requirements.txt
+   #+end_src
+3) run the script
+   #+begin_src bash
+     python springer_downloader.py
+   #+end_src
