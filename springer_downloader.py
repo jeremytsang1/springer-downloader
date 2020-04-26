@@ -17,8 +17,8 @@ class SpringerDL():
     URL_BASE = 'https://link.springer.com/'
     URL_SEARCH_BASE = 'https://link.springer.com/search/page/'
     DOWNLOAD_TEMPLATES = {
-        'epub': 'https://link.springer.com/content/pdf/10.1007%2F{}.pdf',
-        'pdf': 'https://link.springer.com/download/epub/10.1007%2F{}.epub'
+        'pdf': 'https://link.springer.com/content/pdf/10.1007%2F{}.pdf',
+        'epub': 'https://link.springer.com/download/epub/10.1007%2F{}.epub'
     }
     FILETYPES = set(DOWNLOAD_TEMPLATES.keys())
     DOWNLOAD_DIR = 'downloads'
