@@ -65,13 +65,14 @@ class SpringerDownloader():
         # Check which formats are available to download.
         for filetype in self.find_filetypes(book_soup):
             download_url = SpringerDownloader.DOWNLOAD_TEMPLATES[filetype]
-            r = requests.get(download_url, allow_redirects=True)
-            open(self.gen_filename(book_soup, filetype), 'wb').write(r.content)
+            download_request = requests.get(download_url, allow_redirects=True)
+            filename = self.generate_filename(book_soup, filetype)
+            open(filename, 'wb').write(download_request.content)
 
     def find_filetypes(self, book_soup):
         return []
 
-    def gen_filename(self, book_soup, filetype):
+    def generate_filename(self, book_soup, filetype):
         author = self.find_author(book_soup)
         title = self.find_title(book_soup)
         return author + '-' + title + '.' + filetype
