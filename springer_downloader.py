@@ -135,7 +135,7 @@ class SpringerDL():
         filename = os.path.join(directory, base_filename)
 
         if os.path.exists(filename):
-            print(f'{base_filename} exists: skipping download')
+            print(f'SKIPPING DOWNLOAD: {base_filename} exists')
         else:
             download_request = requests.get(download_url, allow_redirects=True)
             open(filename, 'wb').write(download_request.content)
