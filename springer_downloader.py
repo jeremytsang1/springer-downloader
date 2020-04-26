@@ -75,7 +75,7 @@ class SpringerDL():
             download_url = SpringerDL.DOWNLOAD_TEMPLATES[filetype].format(isbn)
             filename = SpringerDL.generate_filename(book_soup, filetype)
             print(filename, download_url, sep='\n  ')
-            # SpringerDL.save_file(download_url, filename)
+            SpringerDL.save_file(download_url, filename)
 
     @staticmethod
     def find_filetypes(book_soup):
