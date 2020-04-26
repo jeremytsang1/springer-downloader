@@ -64,7 +64,7 @@ class SpringerDownloader():
 
         # Check which formats are available to download.
         for filetype in self.find_filetypes(book_soup):
-            download_url = SpringerDownloader.DOWNLOAD_TEMPLATES[filetype]
+            download_url = SpringerDownloader.DOWNLOAD_TEMPLATES[filetype].format(isbn)
             filename = self.generate_filename(book_soup, filetype)
             print(filename)
             # download_request = requests.get(download_url, allow_redirects=True)
