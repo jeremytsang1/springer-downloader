@@ -70,7 +70,14 @@ class SpringerDownloader():
             open(filename, 'wb').write(download_request.content)
 
     def find_filetypes(self, book_soup):
-        return []
+        available_filetypes = set()
+        title_val_template = "Download this book in {} format"
+
+        for filetype in SpringerDownloader.FILETYPES:
+            title_val = title_val_template.format(filetype.upper())
+            if len(book_soup.find_all('a', title=title_val)) != 0:
+                available_filetypes.add(filetype)
+        return available_filetypes
 
     def generate_filename(self, book_soup, filetype):
         author = self.find_author(book_soup)
