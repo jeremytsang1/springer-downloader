@@ -1,5 +1,5 @@
 * Springer Temporary COVID-19 issue Downloader
-Downloads all the books in Springer's Free Textbooks and Library Link special issue during COVID-19 package.
+Downloads all the books in Springer's [[https://link.springer.com/search/page/1?facet-discipline=%22Computer+Science%22&package=mat-covid19_textbooks&facet-language=%22En%22&facet-content-type=%22Book%22&fbclid=IwAR2dD_eYkJArztAjIwg501C7aa9sSA9FGh8ov0PCS6-eY3QFxz2NVqNanHs][Free Textbooks and Library Link special issue during COVID-19 package]].
 ** Installation
 1) clone the repo
 2) install dependencies (use a virtual environment if possible)
