@@ -91,7 +91,12 @@ class SpringerDownloader():
         return author
 
     def find_title(self, book_soup):
-        return 'title'
+        title = div = book_soup.find('div', class_="page-title").h1.text
+
+        # Convert to lowercase and remove spaces.
+        title = title.lower().replace(' ', '_')
+
+        return title
 
 
 def dummy_function(soup):
