@@ -6,6 +6,7 @@ Downloader for PDFs and EPUBs from Springer.com
 
 from bs4 import BeautifulSoup
 import requests
+import os
 
 
 class SpringerDownloader():
@@ -20,6 +21,7 @@ class SpringerDownloader():
         'pdf': 'https://link.springer.com/download/epub/10.1007%2F{}.epub'
     }
     FILETYPES = set(DOWNLOAD_TEMPLATES.keys())
+    DOWNLOAD_DIR = 'downloads'
 
     def __init__(self, url_suffix):
         self._URL_SUFFIX = url_suffix
@@ -66,9 +68,8 @@ class SpringerDownloader():
         for filetype in self.find_filetypes(book_soup):
             download_url = SpringerDownloader.DOWNLOAD_TEMPLATES[filetype].format(isbn)
             filename = self.generate_filename(book_soup, filetype)
-            print(filename)
-            # download_request = requests.get(download_url, allow_redirects=True)
-            # open(filename, 'wb').write(download_request.content)
+            print(filename, download_url, sep='\n  ')
+            # self.save_file(download_url, filename)
 
     def find_filetypes(self, book_soup):
         available_filetypes = set()
@@ -111,6 +112,20 @@ class SpringerDownloader():
         title = title.replace('/', '-')
 
         return title
+
+    def save_file(self, download_url, base_filename):
+        directory = SpringerDownloader.DOWNLOAD_DIR
+
+        if not os.path.exists(directory):
+            os.mkdir(directory)
+
+        filename = os.path.join(directory, base_filename)
+
+        if os.path.exists(filename):
+            print(f'{base_filename} exists: skipping download')
+        else:
+            download_request = requests.get(download_url, allow_redirects=True)
+            open(filename, 'wb').write(download_request.content)
 
 
 def dummy_function(soup):
