@@ -77,7 +77,9 @@ class SpringerDownloader():
         return author + '-' + title + '.' + filetype
 
     def find_author(self, book_soup):
-        return 'author'
+        author = book_soup.find(class_="authors__name")
+        author = author.text.replace(u'\xa0', u' ')
+        return author
 
     def find_title(self, book_soup):
         return 'title'
