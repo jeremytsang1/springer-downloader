@@ -120,6 +120,8 @@ class SpringerDL():
         title = title.replace(',', '_')
         title = title.replace('\\', '-')
         title = title.replace('/', '-')
+        title = title.replace("'", '')
+
 
         return title
 
