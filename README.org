@@ -1,4 +1,5 @@
-* Springer Downloader
+* Springer Temporary COVID-19 issue Downloader
+Downloads all the books in Springer's Free Textbooks and Library Link special issue during COVID-19 package.
 ** Installation
 1) clone the repo
 2) install dependencies (use a virtual environment if possible)
