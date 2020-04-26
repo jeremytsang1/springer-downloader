@@ -54,7 +54,19 @@ class SpringerDownloader():
         for anchor in anchors:
             title = anchor.text
             book_url = SpringerDownloader.URL_BASE + anchor.get('href')
-            isbn = book_url[book_url.rfind('/') + 1:]
+            self.download_book(book_url, title)
+
+    def download_book(self, book_url, title):
+        isbn = book_url[book_url.rfind('/') + 1:]
+
+        # Go to the individual book's page.
+        source = requests.get(book_url).text
+        book_soup = BeautifulSoup(source, 'lxml')
+        print(book_soup.title)
+
+        # Check which formats are available to download.
+
+        # Download available formats
 
 
 def dummy_function(soup):
