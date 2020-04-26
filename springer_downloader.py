@@ -28,7 +28,7 @@ class SpringerDL():
         self._result_soups = None
 
     def download(self):
-        self._result_soups = self.execute_on_all_pages(self.download_books)
+        self._result_soups = self.execute_on_all_pages(SpringerDL.download_books)
 
     def execute_on_all_pages(self, action, start_page_num=1,):
         """Loop through each page performing action on each page."""
@@ -55,13 +55,15 @@ class SpringerDL():
 
         return result_soups  # return all soups for debugging
 
-    def download_books(self, result_soup):
+    @staticmethod
+    def download_books(result_soup):
         anchors = result_soup.main.find_all('a', class_='title')
         for anchor in anchors:
             book_url = SpringerDL.URL_BASE + anchor.get('href')
-            self.download_book(book_url)
+            SpringerDL.download_book(book_url)
 
-    def download_book(self, book_url):
+    @staticmethod
+    def download_book(book_url):
         isbn = book_url[book_url.rfind('/') + 1:]
 
         # Go to the individual book's page.
@@ -69,13 +71,14 @@ class SpringerDL():
         book_soup = BeautifulSoup(source, 'lxml')
 
         # Check which formats are available to download.
-        for filetype in self.find_filetypes(book_soup):
+        for filetype in SpringerDL.find_filetypes(book_soup):
             download_url = SpringerDL.DOWNLOAD_TEMPLATES[filetype].format(isbn)
-            filename = self.generate_filename(book_soup, filetype)
+            filename = SpringerDL.generate_filename(book_soup, filetype)
             print(filename, download_url, sep='\n  ')
-            # self.save_file(download_url, filename)
+            # SpringerDL.save_file(download_url, filename)
 
-    def find_filetypes(self, book_soup):
+    @staticmethod
+    def find_filetypes(book_soup):
         available_filetypes = set()
         title_val_template = "Download this book in {} format"
 
@@ -85,12 +88,14 @@ class SpringerDL():
                 available_filetypes.add(filetype)
         return available_filetypes
 
-    def generate_filename(self, book_soup, filetype):
-        author = self.find_author(book_soup)
-        title = self.find_title(book_soup)
+    @staticmethod
+    def generate_filename(book_soup, filetype):
+        author = SpringerDL.find_author(book_soup)
+        title = SpringerDL.find_title(book_soup)
         return author + '-' + title + '.' + filetype
 
-    def find_author(self, book_soup):
+    @staticmethod
+    def find_author(book_soup):
         author = book_soup.find(class_="authors__name").text
 
         # Fix unicode space.
@@ -104,7 +109,8 @@ class SpringerDL():
 
         return author
 
-    def find_title(self, book_soup):
+    @staticmethod
+    def find_title(book_soup):
         title = book_soup.find('div', class_="page-title").h1.text
 
         # Convert to lowercase and remove spaces.
@@ -117,7 +123,8 @@ class SpringerDL():
 
         return title
 
-    def save_file(self, download_url, base_filename):
+    @staticmethod
+    def save_file(download_url, base_filename):
         directory = SpringerDL.DOWNLOAD_DIR
 
         if not os.path.exists(directory):
